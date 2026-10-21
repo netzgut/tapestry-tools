@@ -1,0 +1,11 @@
+# Keeps the pinned actions in .github/workflows up to date: one pull request a month for all of them.
+# Maven isn't included: Tycho's version also lives in .mvn/extensions.xml, and the target platform is p2.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
