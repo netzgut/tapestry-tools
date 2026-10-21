@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The only module with a pom.xml: pomless mode derives everything else from category.xml, but has no place for
+     the signing below. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>net.netzgut.eclipse.tapestry</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>net.netzgut.eclipse.tapestry.repository</artifactId>
+  <packaging>eclipse-repository</packaging>
+
+  <profiles>
+    <profile>
+      <!-- mvn -Prelease: PGP-signs the bundles and features of the update site with the local gpg, so the private key
+           never leaves this machine (gpg-agent asks for the passphrase). The public key goes into the site's
+           metadata, from where Eclipse shows its fingerprint on install. The key is gpg's default one, or the one
+           given with -Dgpg.keyname=<fingerprint>. -->
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-gpg-plugin</artifactId>
+            <version>${tycho.version}</version>
+            <executions>
+              <execution>
+                <id>sign-p2-artifacts</id>
+                <goals>
+                  <goal>sign-p2-artifacts</goal>
+                </goals>
+                <configuration>
+                  <signer>gpg</signer>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

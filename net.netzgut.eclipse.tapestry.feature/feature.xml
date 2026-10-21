@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.netzgut.eclipse.tapestry.feature"
+      label="Tapestry Tools"
+      version="0.1.0.qualifier"
+      provider-name="Netzgut GmbH">
+
+   <description url="https://github.com/netzgut/tapestry-tools">
+      Lightweight Apache Tapestry 5.9+ support: switch between page/component classes and their templates and
+      resources; renaming or moving a class or package also renames/moves its templates, message catalogs and
+      assets; content assist, Cmd/Ctrl+click, hover and validation in templates; Java content assist for event
+      handler, render phase and lifecycle methods and message keys.
+   </description>
+
+   <copyright>
+      Copyright 2026 Netzgut GmbH. Apache, Apache Tapestry and Tapestry are trademarks of The Apache Software
+      Foundation; this project is not affiliated with or endorsed by it.
+   </copyright>
+
+   <!-- Shown in the install wizard, which asks to accept it -->
+   <license url="https://www.apache.org/licenses/LICENSE-2.0">
+      Licensed under the Apache License, Version 2.0 (the "License"); you may not use this software except in
+      compliance with the License. You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+      Unless required by applicable law or agreed to in writing, software distributed under the License is
+      distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+      See the License for the specific language governing permissions and limitations under the License.
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.jdt.ui"/>
+   </requires>
+
+   <plugin
+         id="net.netzgut.eclipse.tapestry"
+         version="0.0.0"/>
+
+</feature>

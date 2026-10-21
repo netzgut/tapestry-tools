@@ -1,0 +1,131 @@
+<!doctype html>
+<!-- The landing page of the update site. `just release` copies it to gh-pages and fills in @VERSION@. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tapestry Tools for Eclipse</title>
+  <meta name="description" content="Eclipse update site for Tapestry Tools: Apache Tapestry 5.9+ support for Eclipse.">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --text: #1f2328;
+      --muted: #59636e;
+      --background: #ffffff;
+      --surface: #f6f8fa;
+      --border: #d1d9e0;
+      --link: #0969da;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #e6edf3;
+        --muted: #9198a1;
+        --background: #0d1117;
+        --surface: #151b23;
+        --border: #3d444d;
+        --link: #4493f8;
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 48px 16px;
+      background: var(--background);
+      color: var(--text);
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    main {
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin-top: 2.5rem;
+      font-size: 1.25rem;
+    }
+
+    a {
+      color: var(--link);
+    }
+
+    code {
+      padding: 0.1em 0.35em;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      font: 0.9em ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .version {
+      margin: 0.25rem 0 1.5rem;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Tapestry Tools for Eclipse</h1>
+  <p class="version">Version @VERSION@</p>
+
+  <p>
+    Lightweight <a href="https://tapestry.apache.org/">Apache Tapestry</a> support for Eclipse: navigation between
+    page and component classes and their resources, refactoring that keeps them together, hover and validation in
+    templates, and content assist in Java and templates.
+  </p>
+  <p>This is its Eclipse update site. Opened in a browser, it only shows this page.</p>
+
+  <h2>Requirements</h2>
+  <ul>
+    <li>Eclipse 2026-09 (4.41) or later, running on Java 25</li>
+    <li>Apache Tapestry 5.9 or later</li>
+    <li>WTP XML editor or the Generic Editor for your templates</li>
+  </ul>
+
+  <h2>Installation</h2>
+  <ol>
+    <li>In Eclipse, choose <em>Help &gt; Install New Software…</em></li>
+    <li><em>Add…</em> the update site <code>https://netzgut.github.io/tapestry-tools/</code></li>
+    <li>Select <em>Tapestry Tools</em> and finish the wizard.</li>
+  </ol>
+  <p>
+    Releases are PGP-signed. On the first install, Eclipse asks whether to trust the signing key. Its fingerprint is
+    <code>2965 0907 B006 5376 4FDE&nbsp;&nbsp;2A24 43F3 9FDF 926D C24B</code>.
+  </p>
+
+  <h2>More</h2>
+  <ul>
+    <li><a href="https://github.com/netzgut/tapestry-tools#readme">Features and documentation</a></li>
+    <li><a href="https://github.com/netzgut/tapestry-tools/issues">Issues</a></li>
+    <li><a href="https://github.com/netzgut/tapestry-tools">Source code</a></li>
+  </ul>
+
+  <footer>
+    <p>
+      Copyright 2026 Netzgut GmbH.
+      Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.
+    </p>
+    <p>
+      Apache, Apache Tapestry and Tapestry are trademarks of The Apache Software Foundation; this project is not
+      affiliated with or endorsed by it.
+    </p>
+  </footer>
+</main>
+</body>
+</html>

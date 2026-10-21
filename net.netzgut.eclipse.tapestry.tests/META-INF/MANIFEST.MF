@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tapestry Tools Tests
+Bundle-SymbolicName: net.netzgut.eclipse.tapestry.tests
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Netzgut GmbH
+Automatic-Module-Name: net.netzgut.eclipse.tapestry.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-25
+Fragment-Host: net.netzgut.eclipse.tapestry
+Import-Package: org.junit.jupiter.api;version="[5.0.0,7.0.0)",
+ org.junit.jupiter.params;version="[5.0.0,7.0.0)",
+ org.junit.jupiter.params.provider;version="[5.0.0,7.0.0)"
+Require-Bundle: org.eclipse.jdt.core.manipulation

@@ -1,0 +1,6 @@
+target/
+bin/
+.DS_Store
+.metadata/
+.polyglot.*
+org.eclipse.m2e.core.prefs

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <!-- Open *.tml files with whatever editor is registered for XML. -->
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <file-association
+            content-type="org.eclipse.core.runtime.xml"
+            file-extensions="tml"/>
+   </extension>
+
+   <!-- A command is the abstract "what"; handlers below provide the "how". -->
+   <extension point="org.eclipse.ui.commands">
+      <category
+            id="net.netzgut.eclipse.tapestry.category"
+            name="Tapestry"/>
+      <command
+            id="net.netzgut.eclipse.tapestry.commands.switch"
+            categoryId="net.netzgut.eclipse.tapestry.category"
+            name="Switch Between Class and Template"
+            description="Opens the template (.tml) of a Tapestry page/component class, or the class of a template"/>
+      <command
+            id="net.netzgut.eclipse.tapestry.commands.quickSwitch"
+            categoryId="net.netzgut.eclipse.tapestry.category"
+            name="Quick Switch to Related File"
+            description="Shows the class, templates, messages, scripts and stylesheets of a Tapestry page/component in a filterable popup"/>
+   </extension>
+
+   <!-- Icons for commands, shown wherever the command appears (menus, toolbars, Quick Access) -->
+   <extension point="org.eclipse.ui.commandImages">
+      <image
+            commandId="net.netzgut.eclipse.tapestry.commands.switch"
+            icon="icons/tapestry-logo.png"/>
+      <image
+            commandId="net.netzgut.eclipse.tapestry.commands.quickSwitch"
+            icon="icons/tapestry-logo.png"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.handlers">
+      <handler
+            commandId="net.netzgut.eclipse.tapestry.commands.switch"
+            class="net.netzgut.eclipse.tapestry.internal.ui.SwitchHandler"/>
+      <handler
+            commandId="net.netzgut.eclipse.tapestry.commands.quickSwitch"
+            class="net.netzgut.eclipse.tapestry.internal.ui.QuickSwitchHandler"/>
+   </extension>
+
+   <!-- Cmd+Ctrl+T on macOS, Ctrl+Alt+Y on Windows/Linux. Rebind via Preferences > General > Keys.
+        A binding in the window context loses against the same keys bound in a more specific context (e.g. the
+        text editor's Cmd+Opt+Y "Toggle Word Wrap" on macOS), so check all contexts before picking keys.
+        M1 = Cmd/Ctrl, M2 = Shift, M3 = Option/Alt, M4 = Ctrl on macOS. -->
+   <extension point="org.eclipse.ui.bindings">
+      <key
+            commandId="net.netzgut.eclipse.tapestry.commands.switch"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+Y"/>
+      <!-- A key without commandId removes the binding above on macOS -->
+      <key
+            platform="cocoa"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+Y"/>
+      <key
+            platform="cocoa"
+            commandId="net.netzgut.eclipse.tapestry.commands.switch"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M4+T"/>
+
+      <!-- Quick switch: Cmd+Ctrl+E on macOS, Ctrl+Alt+E on Windows/Linux -->
+      <key
+            commandId="net.netzgut.eclipse.tapestry.commands.quickSwitch"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+E"/>
+      <key
+            platform="cocoa"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+E"/>
+      <key
+            platform="cocoa"
+            commandId="net.netzgut.eclipse.tapestry.commands.quickSwitch"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M4+E"/>
+   </extension>
+
+   <!-- Refactoring participants: LTK asks every participant whose <enablement> matches the refactored element.
+        JDT also renames the type when the .java file is renamed, so IType covers both. -->
+   <extension point="org.eclipse.ltk.core.refactoring.renameParticipants">
+      <renameParticipant
+            id="net.netzgut.eclipse.tapestry.refactoring.rename"
+            name="Tapestry Templates and Resources"
+            class="net.netzgut.eclipse.tapestry.internal.refactoring.RenameRelatedFilesParticipant">
+         <enablement>
+            <with variable="element">
+               <instanceof value="org.eclipse.jdt.core.IType"/>
+            </with>
+         </enablement>
+      </renameParticipant>
+      <renameParticipant
+            id="net.netzgut.eclipse.tapestry.refactoring.renamePackage"
+            name="Tapestry Resource Packages"
+            class="net.netzgut.eclipse.tapestry.internal.refactoring.RenamePackageParticipant">
+         <enablement>
+            <with variable="element">
+               <instanceof value="org.eclipse.jdt.core.IPackageFragment"/>
+            </with>
+         </enablement>
+      </renameParticipant>
+   </extension>
+
+   <extension point="org.eclipse.ltk.core.refactoring.moveParticipants">
+      <moveParticipant
+            id="net.netzgut.eclipse.tapestry.refactoring.move"
+            name="Tapestry Templates and Resources"
+            class="net.netzgut.eclipse.tapestry.internal.refactoring.MoveRelatedFilesParticipant">
+         <enablement>
+            <with variable="element">
+               <instanceof value="org.eclipse.jdt.core.IType"/>
+            </with>
+         </enablement>
+      </moveParticipant>
+      <moveParticipant
+            id="net.netzgut.eclipse.tapestry.refactoring.movePackage"
+            name="Tapestry Resource Packages"
+            class="net.netzgut.eclipse.tapestry.internal.refactoring.MovePackageParticipant">
+         <enablement>
+            <with variable="element">
+               <instanceof value="org.eclipse.jdt.core.IPackageFragment"/>
+            </with>
+         </enablement>
+      </moveParticipant>
+   </extension>
+
+   <!-- Template content assist, for both XML editors in use. Registered for all XML files, as .tml is an XML file
+        extension; the computers return nothing for other files. -->
+   <extension point="org.eclipse.ui.genericeditor.contentAssistProcessors">
+      <contentAssistProcessor
+            class="net.netzgut.eclipse.tapestry.internal.ui.TemplateContentAssistProcessor"
+            contentType="org.eclipse.core.runtime.xml"/>
+   </extension>
+
+   <!-- WTP is optional: without it, this extension point doesn't exist and the extension is ignored. -->
+   <extension point="org.eclipse.wst.sse.ui.completionProposal">
+      <proposalCategory
+            id="net.netzgut.eclipse.tapestry.templateCategory"
+            name="Tapestry Proposals"
+            icon="icons/tapestry-logo.png"/>
+      <proposalComputer
+            id="net.netzgut.eclipse.tapestry.templateProposals"
+            categoryId="net.netzgut.eclipse.tapestry.templateCategory"
+            class="net.netzgut.eclipse.tapestry.internal.ui.WtpTemplateProposalComputer"
+            activate="true">
+         <contentType id="org.eclipse.core.runtime.xml"/>
+      </proposalComputer>
+   </extension>
+
+   <!-- Template validation results: shown in the Problems view and as annotations in any text editor. Persistent,
+        so they survive restarts until the template is validated again. -->
+   <extension
+         id="templateProblem"
+         name="Tapestry Template Problem"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.problemmarker"/>
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <persistent value="true"/>
+   </extension>
+
+   <!-- Template hover, like content assist for both XML editors and all XML files. WTP asks its documentation
+        hovers by partition: XML_DEFAULT covers tags and text. -->
+   <extension point="org.eclipse.ui.genericeditor.hoverProviders">
+      <hoverProvider
+            class="net.netzgut.eclipse.tapestry.internal.ui.TemplateTextHover"
+            contentType="org.eclipse.core.runtime.xml"/>
+   </extension>
+
+   <extension point="org.eclipse.wst.sse.ui.editorConfiguration">
+      <documentationTextHover
+            class="net.netzgut.eclipse.tapestry.internal.ui.TemplateTextHover"
+            target="org.eclipse.wst.xml.XML_DEFAULT, org.eclipse.wst.sse.ST_DEFAULT"/>
+   </extension>
+
+   <!-- Java editor content assist. The category shows up (and can be disabled) in
+        Preferences > Java > Editor > Content Assist > Advanced; full id: <plugin id>.<extension id>.
+        The id stays "eventHandlerCategory" so existing enablement settings survive the rename.
+        Individual kinds of proposals are switched on our own preference page. -->
+   <extension
+         point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+         id="eventHandlerCategory"
+         name="Tapestry Proposals">
+      <proposalCategory icon="icons/tapestry-logo.png"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+         id="eventHandlerProposals"
+         name="Tapestry Event Handlers">
+      <!-- activate: load our bundle on first Ctrl+Space instead of waiting for something else to start it.
+           requiresUIThread="false": JDT may compute proposals in a background thread, keeping the editor responsive;
+           we only read the document and the Java model, and our caches are thread-safe. -->
+      <javaCompletionProposalComputer
+            class="net.netzgut.eclipse.tapestry.internal.ui.EventHandlerProposalComputer"
+            categoryId="net.netzgut.eclipse.tapestry.eventHandlerCategory"
+            activate="true"
+            needsSortingAfterFiltering="false"
+            requiresUIThread="false">
+         <partition type="__dftl_partition_content_type"/>
+      </javaCompletionProposalComputer>
+   </extension>
+
+   <!-- Cmd/Ctrl+click. Detectors are registered per editor kind ("target"): all text editors for templates, since
+        the XML editor in use (Generic Editor, WTP) varies, and the Java editor for the way back. -->
+   <extension point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+      <hyperlinkDetector
+            id="net.netzgut.eclipse.tapestry.hyperlinks.template"
+            name="Tapestry Components and Pages"
+            description="Opens classes of components, mixins and pages, fields and handlers of component ids, and message keys"
+            targetId="org.eclipse.ui.DefaultTextEditor"
+            activate="true"
+            class="net.netzgut.eclipse.tapestry.internal.ui.TemplateHyperlinkDetector"/>
+      <hyperlinkDetector
+            id="net.netzgut.eclipse.tapestry.hyperlinks.java"
+            name="Tapestry Template Elements"
+            description="Opens the template element of a component field or event handler"
+            targetId="org.eclipse.jdt.ui.javaCode"
+            activate="true"
+            class="net.netzgut.eclipse.tapestry.internal.ui.JavaTemplateHyperlinkDetector"/>
+      <hyperlinkDetector
+            id="net.netzgut.eclipse.tapestry.hyperlinks.messages"
+            name="Tapestry Message Keys"
+            description="Opens the definition of a message key in messages.get(&quot;…&quot;)"
+            targetId="org.eclipse.jdt.ui.javaCode"
+            activate="true"
+            class="net.netzgut.eclipse.tapestry.internal.ui.MessageKeyHyperlinkDetector"/>
+   </extension>
+
+   <!-- Fills the default scope of our preferences, which "Restore Defaults" and lookups fall back to -->
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer class="net.netzgut.eclipse.tapestry.internal.core.TapestryPreferences$Initializer"/>
+   </extension>
+
+   <!-- No category: a top-level page next to "Java", "Maven" etc. -->
+   <extension point="org.eclipse.ui.preferencePages">
+      <page
+            id="net.netzgut.eclipse.tapestry.preferences"
+            name="Tapestry Tools"
+            class="net.netzgut.eclipse.tapestry.internal.ui.TapestryPreferencePage">
+         <keywordReference id="net.netzgut.eclipse.tapestry.preferences.keywords"/>
+      </page>
+   </extension>
+
+   <!-- Lets the filter field of the preferences dialog find the page by these words, not just its name -->
+   <extension point="org.eclipse.ui.keywords">
+      <keyword
+            id="net.netzgut.eclipse.tapestry.preferences.keywords"
+            label="tml template override overrides extension component page"/>
+   </extension>
+
+   <!-- Message keys inside string literals: only the string partition, so it is not called elsewhere -->
+   <extension
+         point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+         id="messageKeyProposals"
+         name="Tapestry Message Keys">
+      <javaCompletionProposalComputer
+            class="net.netzgut.eclipse.tapestry.internal.ui.MessageKeyProposalComputer"
+            categoryId="net.netzgut.eclipse.tapestry.eventHandlerCategory"
+            activate="true"
+            needsSortingAfterFiltering="false"
+            requiresUIThread="false">
+         <partition type="__java_string"/>
+      </javaCompletionProposalComputer>
+   </extension>
+
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution locationURI="menu:navigate?after=open.ext2">
+         <command
+               commandId="net.netzgut.eclipse.tapestry.commands.switch"
+               style="push"/>
+         <command
+               commandId="net.netzgut.eclipse.tapestry.commands.quickSwitch"
+               style="push"/>
+      </menuContribution>
+   </extension>
+
+</plugin>

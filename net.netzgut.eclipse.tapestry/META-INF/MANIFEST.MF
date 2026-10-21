@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tapestry Tools
+Bundle-SymbolicName: net.netzgut.eclipse.tapestry;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Netzgut GmbH
+Bundle-License: Apache-2.0
+Automatic-Module-Name: net.netzgut.eclipse.tapestry
+Bundle-RequiredExecutionEnvironment: JavaSE-25
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: net.netzgut.eclipse.tapestry.internal.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.ui,
+ org.eclipse.jdt.core.manipulation,
+ org.eclipse.jface,
+ org.eclipse.jface.text,
+ org.eclipse.text,
+ org.eclipse.ltk.core.refactoring,
+ org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.core.filebuffers,
+ org.eclipse.wst.sse.ui;resolution:=optional

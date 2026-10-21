@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Enables Tycho's "pomless" mode: bundles, features and repositories need no pom.xml,
+     Tycho derives one from META-INF/MANIFEST.MF, feature.xml or category.xml. -->
+<extensions>
+  <extension>
+    <groupId>org.eclipse.tycho</groupId>
+    <artifactId>tycho-build</artifactId>
+    <version>5.0.4</version>
+  </extension>
+</extensions>

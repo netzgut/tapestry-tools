@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Defines the p2 update site: which features it contains and how they are grouped in the install dialog. -->
+<site>
+   <feature id="net.netzgut.eclipse.tapestry.feature">
+      <category name="tapestry"/>
+   </feature>
+   <category-def name="tapestry" label="Tapestry Tools"/>
+   <!-- Added to Available Software Sites on install, so installs from a zip or local build find new releases -->
+   <repository-reference location="https://netzgut.github.io/tapestry-tools/" enabled="true"/>
+</site>
