@@ -2,7 +2,7 @@
 <feature
       id="net.netzgut.eclipse.tapestry.feature"
       label="Tapestry Tools"
-      version="0.1.0.qualifier"
+      version="0.2.0.qualifier"
       provider-name="Netzgut GmbH">
 
    <description url="https://github.com/netzgut/tapestry-tools">

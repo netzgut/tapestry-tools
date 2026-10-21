@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tapestry Tools
 Bundle-SymbolicName: net.netzgut.eclipse.tapestry;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: Netzgut GmbH
 Bundle-License: Apache-2.0
 Automatic-Module-Name: net.netzgut.eclipse.tapestry
